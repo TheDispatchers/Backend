@@ -13,36 +13,46 @@ Class server2
 
     public function Display()
     {
+echo "
 
-        echo "<html>\n<head>\n";
-        $this->DisplayTitle();
-        $this->DisplayKeywords();
-        $this->DisplayKeywords();
-        $this->DisplayStyles();
-        echo "</head>\n<bopy>";
-        $this->DisplayHeader();
-        $this->DisplayMenu($this->buttons);
-        echo $this->content;
-        $this->DisplayFooter();
-        echo "</bopy>\n</html>\n";
+        <html>
+<body>
+
+$this->content
+
+</body>
+</html>";
 
 
     }
 }
 
 $ServerOnBool=False;
+$sock=null;
+$client=null;
 
 
-if(isset($_POST['ServerOn'])){
-    $ServerOnBool=True;
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['ServerOn'])) {
+        echo "Should be true";
+        $ServerOnBool = True;
+    }
+
+    if (isset($_POST['ServerOff'])) {
+        echo "Should be false";
+        $ServerOnBool = False;
+
+        /**
+        socket_shutdown($client,[2]);
+        socket_shutdown($sock,[2]);
+        socket_close($client);
+        socket_close($sock);
+        exit;
+         */
+    }
 }
 
-if(isset($_POST['ServerOff'])){
-    $ServerOnBool=False;
-}
-
-
-while ($ServerOnBool) {
+while (true) {
     set_time_limit(0);
 // Set the ip and port we will listen on
     $address = '0.0.0.0';
@@ -58,13 +68,13 @@ while ($ServerOnBool) {
 // Start listening for connections
     socket_listen($sock);
 //loop and listen
-    while (true) {
+    while ($ServerOnBool) {
         /* Accept incoming  requests and handle them as child processes */
         $client = socket_accept($sock);
 // Read the input  from the client – 1024000 bytes
         $input = socket_read($client, 1024000);
 // Display output  back to client
-        socket_write($client, $input);
+        socket_write($client, "Hello Client");
         socket_close($client);
     }
 // Close the master sockets
@@ -74,8 +84,9 @@ while ($ServerOnBool) {
 
 $server2 = new Server2();
 
-$server2->content = $server2->content."<form action='' method='post'>
-        <input type='submit' value='On' name='ServerOn'>
-         <input type='submit' value='Off' name='ServerOff'>";
+$server2->content = $server2->content."<form method=\"POST\" name=\"TurnOnOff\">
+        <input type=\"submit\"  value='On' name='ServerOn'>
+         <input type=\"submit\"  value='Off' name='ServerOff'>
+         </form>";
 
 $server2->Display();
