@@ -42,17 +42,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "Should be false";
         $ServerOnBool = False;
 
-        /**
-        socket_shutdown($client,[2]);
-        socket_shutdown($sock,[2]);
+        if($sock==null){
+            echo "Socket is null?";
+        }
+
+        socket_get_option($sock, SOL_SOCKET,SO_REUSEADDR);
+
+
         socket_close($client);
         socket_close($sock);
-        exit;
-         */
     }
 }
 
-while (true) {
+while ($ServerOnBool) {
+
     set_time_limit(0);
 // Set the ip and port we will listen on
     $address = '0.0.0.0';
@@ -64,6 +67,12 @@ while (true) {
         echo socket_strerror(socket_last_error($socket));
         exit;
     }
+
+    socket_set_option($sock, SOL_SOCKET, SO_REUSEADDR, 1);
+    socket_set_option($sock, SOL_SOCKET, SO_REUSEPORT, 1);
+
+
+
     socket_bind($sock, $address, $port) or die('Could not bind to address');  //0 for localhost
 // Start listening for connections
     socket_listen($sock);
@@ -74,7 +83,7 @@ while (true) {
 // Read the input  from the client – 1024000 bytes
         $input = socket_read($client, 1024000);
 // Display output  back to client
-        socket_write($client, "Hello Client");
+        socket_write($client, "Hello Clients");
         socket_close($client);
     }
 // Close the master sockets
