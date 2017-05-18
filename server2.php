@@ -7,7 +7,31 @@
  */
 /*************************************/
 /********Socket Server*********************/
-while (true) {
+
+Class server2
+{
+
+    public function Display()
+    {
+
+
+
+    }
+}
+
+$ServerOnBool=False;
+
+
+if(isset($_POST['ServerOn'])){
+    $ServerOnBool=True;
+}
+
+if(isset($_POST['ServerOff'])){
+    $ServerOnBool=False;
+}
+
+
+while ($ServerOnBool) {
     set_time_limit(0);
 // Set the ip and port we will listen on
     $address = '0.0.0.0';
@@ -35,3 +59,12 @@ while (true) {
 // Close the master sockets
     socket_close($sock);
 }
+
+
+$server2 = new Server2();
+
+$server2->content = $server2->content."<form action='' method='post'>
+        <input type='submit' value='On' name='ServerOn'>
+         <input type='submit' value='Off' name='ServerOff'>";
+
+$server2->Display();
