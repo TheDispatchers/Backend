@@ -14,6 +14,17 @@ Class server2
     public function Display()
     {
 
+        echo "<html>\n<head>\n";
+        $this->DisplayTitle();
+        $this->DisplayKeywords();
+        $this->DisplayKeywords();
+        $this->DisplayStyles();
+        echo "</head>\n<bopy>";
+        $this->DisplayHeader();
+        $this->DisplayMenu($this->buttons);
+        echo $this->content;
+        $this->DisplayFooter();
+        echo "</bopy>\n</html>\n";
 
 
     }
