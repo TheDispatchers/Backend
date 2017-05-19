@@ -8,28 +8,27 @@
 /*************************************/
 /********Socket Server*********************/
 
+
+
 Class server2
 {
 
     public function Display()
     {
-echo "
-
-        <html>
-<body>
-
-$this->content
-
-</body>
-</html>";
-
-
+    echo "
+    <html>
+    <body>
+    $this->content
+    </body>
+    </html>";
     }
 }
 
 $ServerOnBool=False;
 $sock=null;
 $client=null;
+$clientList = array();
+
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -46,11 +45,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo "Socket is null?";
         }
 
-        socket_get_option($sock, SOL_SOCKET,SO_REUSEADDR);
 
-
-        socket_close($client);
+        $linger = array ('l_linger' => 0, 'l_onoff' => 1);
+        socket_set_option($sock, SOL_SOCKET, SO_LINGER, $linger);
         socket_close($sock);
+
+        exit;
+
     }
 }
 
@@ -80,10 +81,29 @@ while ($ServerOnBool) {
     while ($ServerOnBool) {
         /* Accept incoming  requests and handle them as child processes */
         $client = socket_accept($sock);
+
+
+        if($client != null) {
+            array_push($clientList, $client);
+
+
+            foreach ($clientList as $tempClient) {
+
+                //socket_accept($sock);
+
+                echo "Wrote to client";
+
+                socket_write($tempClient, "          New Client was added, array size is: ". sizeof($clientList));
+
+            }
+
+        }
+
+
 // Read the input  from the client – 1024000 bytes
         $input = socket_read($client, 1024000);
 // Display output  back to client
-        socket_write($client, "Hello Clients");
+        socket_write($client, "Hello Client        ");
         socket_close($client);
     }
 // Close the master sockets
