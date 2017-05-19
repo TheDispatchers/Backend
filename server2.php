@@ -8,7 +8,54 @@
 /*************************************/
 /********Socket Server*********************/
 
-while (true) {
+Class server2
+{
+
+    public function Display()
+    {
+echo "
+
+        <html>
+<body>
+
+$this->content
+
+</body>
+</html>";
+
+
+    }
+}
+
+$ServerOnBool=False;
+$sock=null;
+$client=null;
+
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['ServerOn'])) {
+        echo "Should be true";
+        $ServerOnBool = True;
+    }
+
+    if (isset($_POST['ServerOff'])) {
+        echo "Should be false";
+        $ServerOnBool = False;
+
+        if($sock==null){
+            echo "Socket is null?";
+        }
+
+        socket_get_option($sock, SOL_SOCKET,SO_REUSEADDR);
+
+
+        socket_close($client);
+        socket_close($sock);
+    }
+}
+
+while ($ServerOnBool) {
+
     set_time_limit(0);
 // Set the ip and port we will listen on
     $address = '0.0.0.0';
@@ -20,19 +67,35 @@ while (true) {
         echo socket_strerror(socket_last_error($socket));
         exit;
     }
+
+    socket_set_option($sock, SOL_SOCKET, SO_REUSEADDR, 1);
+    socket_set_option($sock, SOL_SOCKET, SO_REUSEPORT, 1);
+
+
+
     socket_bind($sock, $address, $port) or die('Could not bind to address');  //0 for localhost
 // Start listening for connections
     socket_listen($sock);
 //loop and listen
-    while (true) {
+    while ($ServerOnBool) {
         /* Accept incoming  requests and handle them as child processes */
         $client = socket_accept($sock);
 // Read the input  from the client – 1024000 bytes
         $input = socket_read($client, 1024000);
 // Display output  back to client
-        socket_write($client, $input);
+        socket_write($client, "Hello Clients");
         socket_close($client);
     }
 // Close the master sockets
     socket_close($sock);
 }
+
+
+$server2 = new Server2();
+
+$server2->content = $server2->content."<form method=\"POST\" name=\"TurnOnOff\">
+        <input type=\"submit\"  value='On' name='ServerOn'>
+         <input type=\"submit\"  value='Off' name='ServerOff'>
+         </form>";
+
+$server2->Display();
