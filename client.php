@@ -6,24 +6,70 @@
  * Time: 12:40 PM
  */
 
-$host    = "86.52.212.76";
-$port    = 8113;
-$message = "Hello Servers";
-echo "Message To server :".$message;
-// create socket
-$socket = socket_create(AF_INET, SOCK_STREAM, 0) or die("Could not create socket\n");
-// connect to server
-$result = socket_connect($socket, $host, $port) or die("Could not connect to server\n");
-// send string to server
-socket_write($socket, $message, strlen($message)) or die("Could not send data to server\n");
 
-while(true) {
-// get server response
-    //socket_listen($socket);
+if(!($sock = socket_create(AF_INET, SOCK_STREAM, 0)))
+{
+    $errorcode = socket_last_error();
+    $errormsg = socket_strerror($errorcode);
 
-    $result = socket_read($socket, 1024000) or die("Could not read server response\n");
-    echo "Reply From Server  :" . $result;
-
-    // close socket
+    die("Couldn't create socket: [$errorcode] $errormsg \n");
 }
-socket_close($socket);
+
+echo "Socket created \n";
+
+//Connect socket to remote server
+if(!socket_connect($sock , '86.52.212.76' , 8113))
+{
+    $errorcode = socket_last_error();
+    $errormsg = socket_strerror($errorcode);
+
+    die("Could not connect: [$errorcode] $errormsg \n");
+}
+
+echo "Connection established \n";
+
+$message = "Testing";
+
+//Send the message to the server
+if( ! socket_send ( $sock , $message , strlen($message) , 0))
+{
+    $errorcode = socket_last_error();
+    $errormsg = socket_strerror($errorcode);
+
+    die("Could not send data: [$errorcode] $errormsg \n");
+}
+
+echo "Message send successfully \n";
+
+
+//print the received message
+
+$myObj->Function = "LogIn";
+$myObj->username = "User";
+$myObj->password = "Password";
+
+$myJSON = json_encode($myObj);
+echo $myJSON;
+
+//Send the message to the server
+if( ! socket_send ( $sock , $myJSON , strlen($myJSON) , 0))
+{
+    $errorcode = socket_last_error();
+    $errormsg = socket_strerror($errorcode);
+
+    die("Could not send data: [$errorcode] $errormsg \n");
+}
+
+echo "Message send successfully \n";
+
+//Now receive reply from server
+if(socket_recv ( $sock , $buf , 2045 , MSG_WAITFORONE ) === FALSE)
+{
+    $errorcode = socket_last_error();
+    $errormsg = socket_strerror($errorcode);
+
+    die("Could not receive data: [$errorcode] $errormsg \n");
+}
+
+//print the received message
+echo $buf;
