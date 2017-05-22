@@ -44,7 +44,7 @@ echo "Message send successfully \n";
 
 //print the received message
 
-$myObj->Function = "LogIn";
+$myObj->Function = "login";
 $myObj->username = "User";
 $myObj->password = "Password";
 

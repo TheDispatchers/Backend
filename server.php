@@ -5,12 +5,16 @@
  * Date: 21.5.2017
  * Time: 19:13
  */
+
+include ('ServerSQLBridge.php');
+
 error_reporting(~E_NOTICE);
 set_time_limit (0);
 
 $address = "0.0.0.0";
 $port = 8114;
 $max_clients = 10;
+
 
 if(!($sock = socket_create(AF_INET, SOCK_STREAM, 0)))
 {
@@ -61,7 +65,6 @@ while (true)
 {
     //prepare array of readable client sockets
     $read = array();
-
     //first socket is the master socket
     $read[0] = $sock;
 
@@ -113,7 +116,14 @@ while (true)
     {
         if (in_array($client_socks[$i] , $read))
         {
-            echo $input = socket_read($client_socks[$i] , 1024000);
+            $input = socket_read($client_socks[$i] , 1024000);
+
+            $input_decoded = json_decode($input);
+            $Function = $input_decoded->Function;
+            $serverSQLBridge = new ServerSQLBridge($dbFac);
+            $output= $serverSQLBridge -> login($Json);
+
+
 
             if ($input == null)
             {
@@ -124,11 +134,11 @@ while (true)
             }
 
             else {
-                $n = trim($input);
+                //$n = trim($input);
 
-                $output = "OK ... $input";
+                //$output = "OK ... $input";
 
-                echo "Sending output to client \n";
+                echo "Sending output to client \n". $output;
                 //send response to client
                 socket_write($client_socks[$i], $output);
             }
