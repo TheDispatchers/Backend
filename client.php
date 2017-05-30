@@ -28,25 +28,11 @@ if(!socket_connect($sock , '86.52.212.76' , 8113))
 
 echo "Connection established \n";
 
-$message = "Testing";
 
-//Send the message to the server
-if( ! socket_send ( $sock , $message , strlen($message) , 0))
-{
-    $errorcode = socket_last_error();
-    $errormsg = socket_strerror($errorcode);
-
-    die("Could not send data: [$errorcode] $errormsg \n");
-}
-
-echo "Message send successfully \n";
-
-
-//print the received message
-
-$myObj->Function = "login";
+$myObj->function = "login";
 $myObj->username = "User";
 $myObj->password = "Password";
+
 
 $myJSON = json_encode($myObj);
 echo $myJSON;

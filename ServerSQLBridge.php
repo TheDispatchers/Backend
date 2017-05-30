@@ -17,6 +17,8 @@ Class ServerSQLBridge
     public function __construct(DBFacade $dbFac) {
 
         $this->dbFac = $dbFac;
+        $UserArray[]=NULL;
+        $DriverArray[]=NULL;
 
     }
 
@@ -25,18 +27,21 @@ Class ServerSQLBridge
         $string = null;
 
         $input_decoded = json_decode($Json);
-        $Function = $input_decoded->Function;
+        $function = $input_decoded->function;
 
-        switch ($Function) {
+        echo $function;
+
+        switch ($function) {
             case "register":
                 $string = register($Json);
                 break;
             case "login":
-                $string = login($Json);
+                echo"Entered login case";
+                $string = ServerSQLBridge::login($Json);
                 break;
 
             default:
-                echo "lol";
+                echo $function;
         }
         return $string;
 

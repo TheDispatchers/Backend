@@ -11,6 +11,8 @@ include ('ServerSQLBridge.php');
 error_reporting(~E_NOTICE);
 set_time_limit (0);
 
+$serverSQLBridge = new ServerSQLBridge($dbFac);
+
 $address = "0.0.0.0";
 $port = 8114;
 $max_clients = 10;
@@ -116,12 +118,14 @@ while (true)
     {
         if (in_array($client_socks[$i] , $read))
         {
-            $input = socket_read($client_socks[$i] , 1024000);
+            $Json = socket_read($client_socks[$i] , 1024000);
 
-            $input_decoded = json_decode($input);
-            $Function = $input_decoded->Function;
-            $serverSQLBridge = new ServerSQLBridge($dbFac);
-            $output= $serverSQLBridge -> login($Json);
+            echo $Json;
+
+            $input_decoded = json_decode($Json);
+            $function = $input_decoded->function;
+            echo "Server side function read :". $function;
+            $output= $serverSQLBridge -> getMethod($Json);
 
 
 
