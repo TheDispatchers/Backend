@@ -1,0 +1,31 @@
+INSERT INTO `CarTypes` (`ID`, `typeName`, `description`, `seats`, `luggage`) VALUES ('1', 'Any', 'Any car.', '5', '2');
+INSERT INTO `CarTypes` (`ID`, `typeName`, `description`, `seats`, `luggage`) VALUES ('2', 'Truck (Pick-Up)', 'Large pick-up truck.', '5', '6');
+INSERT INTO `CarTypes` (`ID`, `typeName`, `description`, `seats`, `luggage`) VALUES ('3', 'Sedan', 'Smaller vehicle with room for 1-3 people.', '5', '2');
+INSERT INTO `CarTypes` (`ID`, `typeName`, `description`, `seats`, `luggage`) VALUES ('4', 'Van', 'Large van.', '8', '8');
+INSERT INTO `CarTypes` (`ID`, `typeName`, `description`, `seats`, `luggage`) VALUES ('5', 'Hybrid/Electric', 'Mid-range electric or hybrid vehicle.', '5', '2');
+INSERT INTO `CarTypes` (`ID`, `typeName`, `description`, `seats`, `luggage`) VALUES ('6', 'Convertible', 'Luxurious roof-less sporty type of car.', '4', '2');
+INSERT INTO `CarTypes` (`ID`, `typeName`, `description`, `seats`, `luggage`) VALUES ('7', 'Wagon', 'A combi size car with enough space for people and luggage.', '5', '4');
+
+
+INSERT INTO `Cars` (`VIN`, `licensePlate`, `make`, `model`, `prodYear`, `carTypeID`) VALUES ('1GNALDEK0FZ112709', 'AX78545', 'Skoda', 'Octavia', '2016', '7');
+INSERT INTO `Cars` (`VIN`, `licensePlate`, `make`, `model`, `prodYear`, `carTypeID`) VALUES ('JTEBU5JR5E5164695', 'AP78241', 'Mercedes-Benz', 'S500', '2017', '3');
+INSERT INTO `Cars` (`VIN`, `licensePlate`, `make`, `model`, `prodYear`, `carTypeID`) VALUES ('5TFAY5F15EX406526', 'AX65741', 'Toyota', 'Hilux', '2008', '2');
+INSERT INTO `Cars` (`VIN`, `licensePlate`, `make`, `model`, `prodYear`, `carTypeID`) VALUES ('2HGFB2F58FH514560', 'BB45147', 'Chevrolet', 'Camaro', '2012', '6');
+INSERT INTO `Cars` (`VIN`, `licensePlate`, `make`, `model`, `prodYear`, `carTypeID`) VALUES ('2HGFB2F55CH315168', 'AY65412', 'Toyota', 'Prius', '2011', '5');
+INSERT INTO `Cars` (`VIN`, `licensePlate`, `make`, `model`, `prodYear`, `carTypeID`) VALUES ('1G1YY26E485106856', 'AX71522', 'Volkswagen', 'Golf', '2010', '3');
+INSERT INTO `Cars` (`VIN`, `licensePlate`, `make`, `model`, `prodYear`, `carTypeID`) VALUES ('1HD1BHY102Y089632', 'BY67495', 'Volkswagen', 'Passat', '2015', '7');
+INSERT INTO `Cars` (`VIN`, `licensePlate`, `make`, `model`, `prodYear`, `carTypeID`) VALUES ('1GCNCPEH5EZ339764', 'AG45214', 'Audi', 'A7', '2014', '7');
+INSERT INTO `Cars` (`VIN`, `licensePlate`, `make`, `model`, `prodYear`, `carTypeID`) VALUES ('1N6AD0ER9AC405111', 'BT62486', 'Peugeot', '206+', '2008', '3');
+INSERT INTO `Cars` (`VIN`, `licensePlate`, `make`, `model`, `prodYear`, `carTypeID`) VALUES ('1GKUKEEF5AR119444', 'BA79851', 'Tesla', 'Model S', '2016', '5');
+
+
+INSERT INTO `Driver` (`ID`, `firstName`, `lastName`, `password`, `licensePlate`) VALUES ('1', 'James', 'Hunt', '5f4dcc3b5aa765d61d83', 'BA79851');
+INSERT INTO `Driver` (`ID`, `firstName`, `lastName`, `password`, `licensePlate`) VALUES ('2', 'Nikki', 'Lauda', '5f4dcc3b5aa765d61d83', 'BT62486');
+INSERT INTO `Driver` (`ID`, `firstName`, `lastName`, `password`, `licensePlate`) VALUES ('3', 'Michael', 'Schumacher', '5f4dcc3b5aa765d61d83', 'AG45214');
+INSERT INTO `Driver` (`ID`, `firstName`, `lastName`, `password`, `licensePlate`) VALUES ('4', 'Lewis', 'Hamilton', '5f4dcc3b5aa765d61d83', 'BY67495');
+INSERT INTO `Driver` (`ID`, `firstName`, `lastName`, `password`, `licensePlate`) VALUES ('5', 'Valtteri', 'Bottas', '5f4dcc3b5aa765d61d83', 'AX71522');
+INSERT INTO `Driver` (`ID`, `firstName`, `lastName`, `password`, `licensePlate`) VALUES ('6', 'Nico', 'Hulkenberg', '5f4dcc3b5aa765d61d83', 'AY65412');
+INSERT INTO `Driver` (`ID`, `firstName`, `lastName`, `password`, `licensePlate`) VALUES ('7', 'Romain', 'Grosjean', '5f4dcc3b5aa765d61d83', 'AX65741');
+INSERT INTO `Driver` (`ID`, `firstName`, `lastName`, `password`, `licensePlate`) VALUES ('8', 'Daniel', 'Ricciardo', '5f4dcc3b5aa765d61d83', 'AP78241');
+INSERT INTO `Driver` (`ID`, `firstName`, `lastName`, `password`, `licensePlate`) VALUES ('9', 'Sergio', 'Perez', '5f4dcc3b5aa765d61d83', 'AX78545');
+INSERT INTO `Driver` (`ID`, `firstName`, `lastName`, `password`, `licensePlate`) VALUES ('10', 'Nico', 'Rosberg', '5f4dcc3b5aa765d61d83', 'BB45147');

@@ -1,0 +1,6 @@
+//TODO:
+RegisterPage - Add if user is interested in car pooling.
+SettingsPage - Add if user is interested in car pooling.
+E-mail confirmation
+Delete user account
+Shared-Not Shared mode (add option of enabling shared mode when all taxis are busy)
