@@ -19,6 +19,7 @@ try{
     echo $e->getMessage();
 }
 
+
 include_once 'DBFacade.php';
 
 $dbFac = new DBFacade($DB_connect);
