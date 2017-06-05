@@ -6,6 +6,9 @@
  * Time: 12:40 PM
  */
 
+include ('UserObject.php');
+include('TaxiObject.php');
+
 
 if(!($sock = socket_create(AF_INET, SOCK_STREAM, 0)))
 {
@@ -30,8 +33,12 @@ echo "Connection established \n";
 
 
 $myObj->function = "login";
-$myObj->username = "User";
+$myObj->firstName = "Søren";
+$myObj->lastName = "Sørensen";
+$myObj->username = "ThaCrash";
 $myObj->password = "Password";
+$myObj->email = "lol@lol.dk";
+$myObj->carTypeID ="1";
 
 
 $myJSON = json_encode($myObj);
@@ -47,6 +54,8 @@ if( ! socket_send ( $sock , $myJSON , strlen($myJSON) , 0))
 }
 
 echo "Message send successfully \n";
+
+
 
 //Now receive reply from server
 if(socket_recv ( $sock , $buf , 2045 , MSG_WAITFORONE ) === FALSE)
