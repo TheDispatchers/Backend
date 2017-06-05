@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" uploadOnCheckin="9ca45325-bd95-4319-9f4e-cae31ba4e258">
+    <serverData>
+      <paths name="MinComputer">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/iTax" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myUploadOnCheckinName" value="MinComputer" />
+  </component>
+</project>
