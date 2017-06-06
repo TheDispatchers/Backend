@@ -122,6 +122,7 @@ while (true) {
                 unset($client_socks[$i]);
             } else {
 
+                // orderRide and driverUpdate needs to be handled differently, since they don't neccesarily sent a response back immediately.
                 if ($input_decoded->function == "orderRide" or $input_decoded->function == "driverUpdate" ){
                     $array=$serverSQLBridge->checkAvailability();
                     echo json_encode($array)."\n";

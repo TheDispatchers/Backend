@@ -14,6 +14,11 @@ require('DBconfig.php');
 $newDriverMarkers;
 $oldDriverMarkers;
 
+/**
+ * Class Management
+ * Our management site, shows a map with all the taxis that are ready (i.e. not currently driving)
+ * Also has the possibility to add a new driver or car.
+ */
 
 Class Management
 {

@@ -6,6 +6,9 @@
  * Time: 10:13 AM
  */
 
+/**
+ * Class UserObject Userobject with the potentially needed variables
+ */
 class UserObject
 {
     public $sessionKey;

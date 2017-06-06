@@ -9,6 +9,9 @@
 include ('UserObject.php');
 include('TaxiObject.php');
 
+/**
+ * Testing file, for using different methods, without having to call them from xamarin.
+ */
 
 if(!($sock = socket_create(AF_INET, SOCK_STREAM, 0)))
 {

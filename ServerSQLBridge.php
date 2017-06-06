@@ -17,6 +17,11 @@ Class ServerSQLBridge
     public $userArray=array();
     public $driverArray=array();
 
+
+    /**
+     * ServerSQLBridge constructor.
+     * @param DBFacade $dbFac The database facade is handed over when it's created
+     */
     public function __construct(DBFacade $dbFac) {
 
         $this->dbFac = $dbFac;
@@ -24,6 +29,12 @@ Class ServerSQLBridge
 
     }
 
+    /**
+     * @param $Json - A JSON containing what function to run, and the neccesary information for that function
+     * @param $clientsocket - for communicating when the response isn't right after write
+     * @param $mastersocket - for communicating when the response isn't right after write
+     * @return null|string|UserObject|void - Returns an answer from what ever string was called.
+     */
     function getMethod($Json, $clientsocket, $mastersocket)
     {
         $string = null;
@@ -116,6 +127,10 @@ Class ServerSQLBridge
 
     }
 
+    /**
+     * @param $Json - JSON with the information needed to register a new user
+     * @return string - Returns the status of the register function
+     */
     function register($Json)
     {
         $input_decoded = json_decode($Json);
@@ -132,6 +147,10 @@ Class ServerSQLBridge
 
     }
 
+    /**
+     * @param $Json - Json containing the information needed to login
+     * @return string|UserObject - Returns primarily the sessionkey generated
+     */
     function login($Json)
     {
         $input_decoded = json_decode($Json);
@@ -154,6 +173,10 @@ Class ServerSQLBridge
         }
     }
 
+    /**
+     * @param $Json - JSON containing the needed information to login
+     * @return string - Returns the sessionkey for the login
+     */
     function loginDriver($Json)
         {
             $input_decoded = json_decode($Json);
@@ -171,6 +194,9 @@ Class ServerSQLBridge
 
         }
 
+    /**
+     * @param $Json - JSON containing the information needed to create a new driver
+     */
     function addNewDriver($Json){
         $input_decoded = json_decode($Json);
         $username = $input_decoded->username;
@@ -178,6 +204,9 @@ Class ServerSQLBridge
 
     }
 
+    /**
+     * @param $Json -  JSON containing the information needed to create of new car
+     */
     function addNewCar($Json){
         $input_decoded = json_decode($Json);
         $username = $input_decoded->username;
@@ -186,6 +215,12 @@ Class ServerSQLBridge
 
     }
 
+    /**
+     * @param $Json - JSON containing the information needed to order a ride
+     * @param $clientsocket - socket for future communcation back
+     * @param $mastersocket - socket for future communcation back
+     * @return string - Returns a JSON with relevant information
+     */
     function orderRide($Json, $clientsocket, $mastersocket){
         $input_decoded = json_decode($Json);
         $sessionKey = $input_decoded->sessionKey;
@@ -210,6 +245,10 @@ Class ServerSQLBridge
 
     }
 
+    /**
+     * @return array This function checks if there are any drivers and users that can be paired together for a ride. An array containing the driver object and user object.
+     * and the relevant
+     */
     function checkAvailability(){
 
         foreach ($this->driverArray as $driver){
@@ -297,6 +336,10 @@ Class ServerSQLBridge
 
     }
 
+    /**
+     * @param $Json - JSON containing the starting and endpoint to calculate the distance and price
+     * @return string - Returns a JSON containing the distance and price
+     */
     function getDistanceTimePrice($Json){
 
         $Jsondecoded = json_decode($Json);
@@ -341,6 +384,9 @@ Class ServerSQLBridge
 
     }
 
+    /**
+     * Write our drivers to the shared memory (in the future also write the customers)
+     */
     function writeToShmop()
     {
         echo json_decode("Actual driver array :".$this->driverArray."\n");

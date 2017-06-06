@@ -6,6 +6,10 @@
  * Time: 11:05 AM
  */
 
+/**
+ * Generates a JSON for the management.php to view available taxis. It reads from the shared memory.
+ */
+
 include ('shmop.php');
 
 

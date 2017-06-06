@@ -17,7 +17,11 @@ class DBFacade
         $this->db = $DB_connect;
     }
 
-
+    /**
+     * @param $username - username for user login
+     * @param $upass - password from the user login
+     * @return string|UserObject - returns status of the login, if succesfull a sessionkey, if failed it returns invalid
+     */
     public function login($username, $upass){
         try{
             $stmt = $this->db->prepare("CALL login(@sessionKey,@validLogin,?,?,@userID,@carTypeID,@totalRides,@missedRides, @totalSpent, @lastRideID, @rideStreak)");
@@ -52,6 +56,11 @@ class DBFacade
         }
     }
 
+    /**
+     * @param $ID - Driver ID
+     * @param $password - Driver password
+     * @return string - returns status of the login, if succesfull a sessionkey, if failed it returns invalid
+     */
     public function loginDriver($ID, $password){
         try{
             $stmt = $this->db->prepare("CALL loginDriver(@sessionKey,@validLogin,?,?)");
@@ -81,7 +90,15 @@ class DBFacade
         }
     }
 
-
+    /**
+     * @param $user_username - Desired username
+     * @param $user_password - Desired password
+     * @param $user_email - Desired email to be used
+     * @param $user_firstname - Firstname of the user
+     * @param $user_lastname - Lastname of the user
+     * @param $user_carTypeID - Prefered cartype
+     * @return string - Returns the status of the registration
+     */
     public function register($user_username, $user_password, $user_email, $user_firstname, $user_lastname, $user_carTypeID){
         try{
             if(filter_var($user_email, FILTER_VALIDATE_EMAIL)) {
@@ -111,8 +128,13 @@ class DBFacade
         }
     }
 
-
-
+    /**
+     * @param $firstName - firstname of the driver
+     * @param $lastName - lastname of the driver
+     * @param $password - password for the login
+     * @param $licensePlate - licenseplate of the car the driver is driving
+     * @return mixed - Returns if it was succesfull or not
+     */
     public function addNewDriver($firstName, $lastName, $password, $licensePlate){
         try{
                 $stmt = $this->db->prepare("CALL addNewCar (@success, ?,?,?,?) ");
@@ -134,6 +156,15 @@ class DBFacade
         }
     }
 
+    /**
+     * @param $VIN - VIN of the car
+     * @param $licensePlate - Licenseplate of the car
+     * @param $make - Make of the car
+     * @param $model - Model of the car
+     * @param $prodYear - Production year of the car
+     * @param $carTypeID - ID of the cartype
+     * @return mixed - Returns of the creation was succesfull.
+     */
     public function addNewCar($VIN, $licensePlate, $make, $model, $prodYear, $carTypeID){
         try{
             $stmt = $this->db->prepare("CALL addNewCar (@success, ?,?,?,?,?,?) ");
@@ -157,6 +188,9 @@ class DBFacade
         }
     }
 
+    /**
+     * @return mixed - Returns all the licenseplates in the car table
+     */
     public function getAllCarLicensesplates(){
         try{
             $stmt = $this->db->prepare("CALL getAllCarLicenseplates() ");
@@ -170,6 +204,10 @@ class DBFacade
             echo $e->getMessage();
         }
     }
+
+    /**
+     * @return mixed - Returns all the cartypeNames (not ID).
+     */
     public function getAllCarTypes(){
         try{
             $stmt = $this->db->prepare("CALL getAllCarTypes() ");

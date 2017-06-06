@@ -5,6 +5,10 @@
  * Date: 5/31/17
  * Time: 6:03 PM
  */
+
+/**
+ * Class taxiObject Taxiobject with the potentially needed variables
+ */
 class taxiObject
 {
     public $sessionKey;

@@ -6,6 +6,10 @@
  * Time: 11:43 PM
  */
 
+/**
+ * Generate the relevant information to establish a connection, which is then passed to the DBfacade
+ */
+
 $DB_host = "86.52.212.76";
 $DB_user = "DMU4";
 $DB_pass = "github";
