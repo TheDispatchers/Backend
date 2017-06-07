@@ -89,6 +89,11 @@ Class ServerController
                     $string = ServerController::getDistanceTimePrice($Json);
                     break;
                 }
+                case "finishRide":{
+                    echo "Entered finishRide \n";
+                    $string = ServerController::getDistanceTimePrice($Json);
+                    break;
+                }
 
                 default:
                     echo $function." doesn't exist"."\n";
@@ -289,6 +294,7 @@ Class ServerController
 
                 $Json -> tolat = $driverUserArray[0] -> tolat;
                 $Json -> tolng = $driverUserArray[0] -> tolng;
+                $Json -> userID = $driverUserArray[0]->userID;
                 $driverUserArray[3]=$this->getDistanceTimePrice(json_encode($Json));
 
                     echo "Found a match for driver and client \n";
@@ -374,6 +380,14 @@ Class ServerController
         else{
             echo $response['status']."\n";
         }
+
+    }
+
+    function finishRide($Json){
+
+        $Json_decoded = json_decode($Json);
+        $this-> dbFac ->finishRide($Json_decoded->userID, $Json_decoded->driverID, $Json_decoded->currentDate, $Json_decoded->price);
+        return "Ride finished";
 
     }
 

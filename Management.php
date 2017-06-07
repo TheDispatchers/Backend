@@ -38,9 +38,11 @@ Class Management
 
 if (isset($_POST['addCar'])) {
     echo "VIN  :" . $_POST['VIN'] . "  License plate :" . $_POST['carlicenseplate'] . "   Make :" . $_POST['make'] . "   Model :" . $_POST['model'] . "   prodYear :" . $_POST['prodYear'] . "   carType :" . $_POST['carType'];
+    $dbFac -> addNewCar($_POST['VIN'],$_POST['carlicenseplate'],$_POST['make'],$_POST['model'],$_POST['prodYear'],$_POST['carType']);
 }
 if (isset($_POST['addDriver'])) {
     echo md5($_POST['password']);
+    $dbFac -> addNewDriver($_POST['driverFirstName'],$_POST['driverLastName'],$_POST['password'],$_POST['licensePlate']);
 }
 
 $management = new Management();
@@ -127,11 +129,11 @@ $management->footer = $management->footer.'
                 <input type="text" name="prodYear" id="prodYear" value="Production Year">
                 <select name="carType">';
 
-foreach($licenseplates as $licenseplate){
-    $management->footer = $management->footer.'<option value="'.$licenseplate['licensePlate'].'">'.$licenseplate['licensePlate'].'</option>';
+foreach($carTypes as $carType){
+    $management->footer = $management->footer.'<option value="'.$carType['typeName'].'">'.$carType['typeName'].'</option>';
 }
 
-$management->footer = $management->footer. '</select>
+$management->footer = $management->footer.'</select>
                 <input type="submit" name="addCar"></button>
             </form>
 
@@ -141,11 +143,11 @@ $management->footer = $management->footer. '</select>
                     <input type="password" name="password" value="Password">
                 <select name="example">';
 
-foreach($carTypes as $carType){
-    $management->footer = $management->footer.'<option value="'.$carType['typeName'].'">'.$carType['typeName'].'</option>';
+foreach($licenseplates as $licenseplate){
+    $management->footer = $management->footer.'<option value="'.$licenseplate['licensePlate'].'">'.$licenseplate['licensePlate'].'</option>';
 }
 
-$management->footer = $management->footer.'</select>
+$management->footer = $management->footer. '</select>
                 <input type="submit" name="addDriver"></button>
             </form>
 

@@ -222,4 +222,22 @@ class DBFacade
         }
     }
 
+    public function finishRide($userID, $driverID, $rideDate, $price){
+        try{
+            $stmt = $this->db->prepare("CALL newRideHistory(?,?,?,?) ");
+            $stmt->bindParam(1, $userID, PDO::PARAM_INT);
+            $stmt->bindParam(2, $driverID, PDO::PARAM_INT);
+            $stmt->bindParam(3, $rideDate, PDO::PARAM_STR);
+            $stmt->bindParam(4, $price, PDO::PARAM_STR);
+
+            $stmt->execute();
+
+            return "inserted";
+            // $success can be returned as either string : Email and Username taken, Email taken, Username taken or Success
+
+        }catch(PDOException $e){
+            echo $e->getMessage();
+        }
+    }
+
 }
