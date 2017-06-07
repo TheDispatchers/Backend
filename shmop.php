@@ -45,7 +45,7 @@ function get_cache($name) {
 }
 
 /**
- * @param $name Hardcoded names for the available sharedmemory blocks, so far only Cabs is used, but Users is for a future iteration (to view on the livemap)
+ * @param $name Hardcoded names for sharedmemory blocks, so far only Cabs is used, but Users is for a future iteration (to view on the livemap)
  * @return mixed - Returns matching ID of the name
  */
 function get_cache_id($name) {

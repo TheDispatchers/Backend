@@ -6,14 +6,14 @@
  * Time: 19:13
  */
 
-include ('ServerSQLBridge.php');
+include('ServerController.php');
 include ('shmop.php');
 
 error_reporting(~E_NOTICE);
 set_time_limit(0);
 
 
-$serverSQLBridge = new ServerSQLBridge($dbFac);
+$serverController = new ServerController($dbFac);
 
 $address = "0.0.0.0";
 $port = 8114;
@@ -111,7 +111,7 @@ while (true) {
             $input_decoded = json_decode($Json);
             $function = $input_decoded->function;
             echo "Server side function read :" . $function;
-            $output = $serverSQLBridge->getMethod($Json,$client_socks[$i],$read[0]);
+            $output = $serverController->getMethod($Json,$client_socks[$i],$read[0]);
             echo $output;
 
 
@@ -124,7 +124,7 @@ while (true) {
 
                 // orderRide and driverUpdate needs to be handled differently, since they don't neccesarily sent a response back immediately.
                 if ($input_decoded->function == "orderRide" or $input_decoded->function == "driverUpdate" ){
-                    $array=$serverSQLBridge->checkAvailability();
+                    $array=$serverController->checkAvailability();
                     echo json_encode($array)."\n";
                     $user = $array[0];
                     $driver = $array[1];
@@ -137,13 +137,13 @@ while (true) {
                         socket_write($driver->clientsocket,$array[3]);
                     }
 
-                    $serverSQLBridge->writeToShmop();
+                    $serverController->writeToShmop();
                 }
                 else {
                     echo "Sending output to client \n" . $output;
                     //send response to client
                     socket_write($client_socks[$i], $output);
-                    $serverSQLBridge->writeToShmop();
+                    $serverController->writeToShmop();
                 }
 
 

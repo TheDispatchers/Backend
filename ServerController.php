@@ -11,7 +11,7 @@ include ("DBFacade.php");
 include ('UserObject.php');
 include('TaxiObject.php');
 
-Class ServerSQLBridge
+Class ServerController
 {
     private $dbFac;
     public $userArray=array();
@@ -19,7 +19,7 @@ Class ServerSQLBridge
 
 
     /**
-     * ServerSQLBridge constructor.
+     * ServerController constructor.
      * @param DBFacade $dbFac The database facade is handed over when it's created
      */
     public function __construct(DBFacade $dbFac) {
@@ -64,34 +64,29 @@ Class ServerSQLBridge
             switch ($function) {
                 case "register":
                     echo "Entered register \n";
-                    $string = ServerSQLBridge::register($Json);
+                    $string = ServerController::register($Json);
                     break;
                 case "login":
                     echo "Entered login case \n";
-                    $string = ServerSQLBridge::login($Json);
+                    $string = ServerController::login($Json);
                     break;
                 case "loginDriver":
                     echo "Entered loginDriver case \n";
-                    $string = ServerSQLBridge::loginDriver($Json);
-                    break;
-
-                case "addNewDriver":
-                    echo "Entered addNewDriver \n";
-                    $string = ServerSQLBridge::addNewDriver($Json);
+                    $string = ServerController::loginDriver($Json);
                     break;
                 case "orderRide":{
                     echo "Entered orderRide \n";
-                    $string = ServerSQLBridge::orderRide($Json,$clientsocket,$mastersocket);
+                    $string = ServerController::orderRide($Json,$clientsocket,$mastersocket);
                     break;
                 }
                 case "driverUpdate":{
                     echo "Entered driverUpdate \n";
-                    $string = ServerSQLBridge::driverUpdate($Json,$clientsocket,$mastersocket);
+                    $string = ServerController::driverUpdate($Json,$clientsocket,$mastersocket);
                     break;
                 }
                 case "getDistanceTimePrice":{
                     echo "Entered driverUpdate \n";
-                    $string = ServerSQLBridge::getDistanceTimePrice($Json);
+                    $string = ServerController::getDistanceTimePrice($Json);
                     break;
                 }
 
@@ -106,15 +101,15 @@ Class ServerSQLBridge
             switch ($function) {
                 case "loginDriver":
                     echo "Entered loginDriver case \n";
-                    $string = ServerSQLBridge::loginDriver($Json);
+                    $string = ServerController::loginDriver($Json);
                     break;
                 case "register":
                     echo "Entered register \n";
-                    $string = ServerSQLBridge::register($Json);
+                    $string = ServerController::register($Json);
                     break;
                 case "login":
                     echo "Entered login case \n";
-                    $string = ServerSQLBridge::login($Json);
+                    $string = ServerController::login($Json);
                     break;
                 default:
                     echo $function." doesn't exist"."\n";
