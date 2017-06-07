@@ -18,7 +18,6 @@ class taxiObject
     public $status;
     public $userID;
     public $clientsocket;
-    public $mastersocket;
 
 
 

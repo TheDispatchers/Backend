@@ -27,7 +27,6 @@ class UserObject
     public $lastRideID;
     public $rideStreak;
     public $clientsocket;
-    public $mastersocket;
 
 
     function __construct($sessionKey, $username)

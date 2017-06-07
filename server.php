@@ -111,7 +111,7 @@ while (true) {
             $input_decoded = json_decode($Json);
             $function = $input_decoded->function;
             echo "Server side function read :" . $function;
-            $output = $serverController->getMethod($Json,$client_socks[$i],$read[0]);
+            $output = $serverController->getMethod($Json,$client_socks[$i]);
             echo $output;
 
 

@@ -35,7 +35,7 @@ Class ServerController
      * @param $mastersocket - for communicating when the response isn't right after write
      * @return null|string|UserObject|void - Returns an answer from what ever string was called.
      */
-    function getMethod($Json, $clientsocket, $mastersocket)
+    function getMethod($Json, $clientsocket)
     {
         $string = null;
 
@@ -76,12 +76,12 @@ Class ServerController
                     break;
                 case "orderRide":{
                     echo "Entered orderRide \n";
-                    $string = ServerController::orderRide($Json,$clientsocket,$mastersocket);
+                    $string = ServerController::orderRide($Json,$clientsocket);
                     break;
                 }
                 case "driverUpdate":{
                     echo "Entered driverUpdate \n";
-                    $string = ServerController::driverUpdate($Json,$clientsocket,$mastersocket);
+                    $string = ServerController::driverUpdate($Json,$clientsocket);
                     break;
                 }
                 case "getDistanceTimePrice":{
@@ -216,7 +216,7 @@ Class ServerController
      * @param $mastersocket - socket for future communcation back
      * @return string - Returns a JSON with relevant information
      */
-    function orderRide($Json, $clientsocket, $mastersocket){
+    function orderRide($Json, $clientsocket){
         $input_decoded = json_decode($Json);
         $sessionKey = $input_decoded->sessionKey;
         $fromlat = $input_decoded->fromlat;
@@ -231,7 +231,6 @@ Class ServerController
                 $user[0]->fromlng = $fromlng;
                 $user[0]->tolat = $tolat;
                 $user[0]->tolng = $tolng;
-                $user[0]-> mastersocket = $mastersocket;
                 $user[0]-> clientsocket = $clientsocket;
                 $user[0]-> status = 'ready';
             }
@@ -302,7 +301,7 @@ Class ServerController
 
     }
 
-    function driverUpdate($Json, $clientsocket, $mastersocket){
+    function driverUpdate($Json, $clientsocket){
         echo"driverUpdate Json :". $Json;
         $input_decoded = json_decode($Json);
         $sessionKey = $input_decoded->sessionKey;
@@ -321,7 +320,6 @@ Class ServerController
                     $driver[0]->lng = $lng;
                     $driver[0]->status = $status;
                     $driver[0]->ID = $ID;
-                    $driver[0]-> mastersocket = $mastersocket;
                     $driver[0]-> clientsocket = $clientsocket;
 
             }
