@@ -10,12 +10,14 @@
 include ("DBFacade.php");
 include ('UserObject.php');
 include('TaxiObject.php');
+include ('Email.php');
 
 Class ServerController
 {
     private $dbFac;
     public $userArray=array();
     public $driverArray=array();
+    public $registerArray=array();
 
 
     /**
@@ -32,7 +34,6 @@ Class ServerController
     /**
      * @param $Json - A JSON containing what function to run, and the neccesary information for that function
      * @param $clientsocket - for communicating when the response isn't right after write
-     * @param $mastersocket - for communicating when the response isn't right after write
      * @return null|string|UserObject|void - Returns an answer from what ever string was called.
      */
     function getMethod($Json, $clientsocket)
@@ -104,6 +105,11 @@ Class ServerController
         }
         else {
             switch ($function) {
+                case "confirmRegister":
+                    echo "Entered confirmRegister \n";
+                    $string = ServerController::confirmRegister($Json);
+                    break;
+
                 case "loginDriver":
                     echo "Entered loginDriver case \n";
                     $string = ServerController::loginDriver($Json);
@@ -134,16 +140,47 @@ Class ServerController
     function register($Json)
     {
         $input_decoded = json_decode($Json);
-        $username = $input_decoded->username;
-        $password = $input_decoded->password;
-        $email = $input_decoded->email;
-        $firstname = $input_decoded->firstName;
-        $lastname = $input_decoded->lastName;
-        $cartypeID = $input_decoded->carTypeID;
-        $string = $this-> dbFac ->register($username,$password,$email,$firstname,$lastname,$cartypeID);
-        echo"        Got this string from register :".$string."\n";
-        return  $string;
 
+        $myObj->username = $input_decoded->username;
+        $myObj->password = $input_decoded->password;
+        $myObj->email = $input_decoded->email;
+        $myObj->firstname = $input_decoded->firstName;
+        $myObj->lastname = $input_decoded->lastName;
+        $myObj->cartypeID = $input_decoded->carTypeID;
+        $myObj-> code = rand(100000,999999);
+
+        $email = New Email;
+
+        $email-> sendMail($myObj->email,"You actication code","Your activation is: ".$myObj->code);
+
+        echo"       Send email with code :".$myObj-> code."\n";
+        $this->registerArray[] = array($myObj);
+        return  "success";
+
+
+    }
+
+    function confirmRegister($Json)
+    {
+        $input_decoded = json_decode($Json);
+
+        foreach($this->registerArray as $user){
+            echo "Checking array user code: ". $user[0]-> code. "    VS. the provided code :". $input_decoded->code;
+            if($user[0]->password = $input_decoded->password AND $user[0]->username = $input_decoded->username AND $user[0]->code = $input_decoded->code){
+                $username = $input_decoded->username;
+                $password = $input_decoded->password;
+                $email = $input_decoded->email;
+                $firstname = $input_decoded->firstName;
+                $lastname = $input_decoded->lastName;
+                $cartypeID = $input_decoded->carTypeID;
+                $string = $this-> dbFac ->register($username,$password,$email,$firstname,$lastname,$cartypeID);
+                echo"        Got this string from register :".$string."\n";
+                return  $string;
+            }
+
+        }
+
+        return "No match found";
 
     }
 
@@ -187,7 +224,9 @@ Class ServerController
 
             if($string != "invalid"){
 
-                $this->driverArray[]= array(new taxiObject($string,$ID));
+                $driver = new taxiObject($string,$ID);
+                $driver ->ID = $ID;
+                $this->driverArray[]= array($driver);
             }
 
             return $string;
@@ -228,6 +267,7 @@ Class ServerController
         $fromlng = $input_decoded->fromlng;
         $tolat = $input_decoded->tolat;
         $tolng = $input_decoded->tolng;
+
 
         foreach ($this->userArray as $user){
             if($user[0]->sessionKey == $sessionKey){
@@ -314,7 +354,7 @@ Class ServerController
         $lat = $input_decoded->lat;
         $lng = $input_decoded->lng;
         $status = $input_decoded->status;
-        $ID = $input_decoded->ID;
+        //$ID = $input_decoded->ID;
 
         echo "Check whole array :".json_encode($this->driverArray)."\n";
 
@@ -325,7 +365,7 @@ Class ServerController
                     $driver[0]->lat = $lat;
                     $driver[0]->lng = $lng;
                     $driver[0]->status = $status;
-                    $driver[0]->ID = $ID;
+                    //$driver[0]->ID = $ID;
                     $driver[0]-> clientsocket = $clientsocket;
 
             }

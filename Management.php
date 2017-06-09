@@ -38,11 +38,11 @@ Class Management
 
 if (isset($_POST['addCar'])) {
     echo "VIN  :" . $_POST['VIN'] . "  License plate :" . $_POST['carlicenseplate'] . "   Make :" . $_POST['make'] . "   Model :" . $_POST['model'] . "   prodYear :" . $_POST['prodYear'] . "   carType :" . $_POST['carType'];
-    $dbFac -> addNewCar($_POST['VIN'],$_POST['carlicenseplate'],$_POST['make'],$_POST['model'],$_POST['prodYear'],$_POST['carType']);
+    $dbFac -> addNewCar($_POST['VIN'],$_POST['carLicensePlate'],$_POST['make'],$_POST['model'],$_POST['prodYear'],$_POST['carType']);
 }
 if (isset($_POST['addDriver'])) {
     echo md5($_POST['password']);
-    $dbFac -> addNewDriver($_POST['driverFirstName'],$_POST['driverLastName'],$_POST['password'],$_POST['licensePlate']);
+    $dbFac -> addNewDriver($_POST['driverFirstName'],$_POST['driverLastName'],md5($_POST['password']),$_POST['licensePlate']);
 }
 
 $management = new Management();
@@ -141,7 +141,7 @@ $management->footer = $management->footer.'</select>
                     <input type="text" name="driverFirstName" id="driverFirstName" value="First name">
                     <input type="text" name="driverLastName" id="driverLastName" value="Last name">
                     <input type="password" name="password" value="Password">
-                <select name="example">';
+                <select name="licensePlate">';
 
 foreach($licenseplates as $licenseplate){
     $management->footer = $management->footer.'<option value="'.$licenseplate['licensePlate'].'">'.$licenseplate['licensePlate'].'</option>';

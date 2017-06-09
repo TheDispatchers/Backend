@@ -137,7 +137,7 @@ class DBFacade
      */
     public function addNewDriver($firstName, $lastName, $password, $licensePlate){
         try{
-                $stmt = $this->db->prepare("CALL addNewCar (@success, ?,?,?,?) ");
+                $stmt = $this->db->prepare("CALL addNewDriver (?,?,?,?) ");
                 $stmt->bindParam(1, $firstName, PDO::PARAM_STR);
                 $stmt->bindParam(2, $lastName, PDO::PARAM_STR);
                 $stmt->bindParam(3, $password, PDO::PARAM_STR);
@@ -165,15 +165,15 @@ class DBFacade
      * @param $carTypeID - ID of the cartype
      * @return mixed - Returns of the creation was succesfull.
      */
-    public function addNewCar($VIN, $licensePlate, $make, $model, $prodYear, $carTypeID){
+    public function addNewCar($VIN, $licensePlate, $make, $model, $prodYear, $carType){
         try{
             $stmt = $this->db->prepare("CALL addNewCar (@success, ?,?,?,?,?,?) ");
             $stmt->bindParam(1, $VIN, PDO::PARAM_STR);
             $stmt->bindParam(2, $licensePlate, PDO::PARAM_STR);
             $stmt->bindParam(3, $make, PDO::PARAM_STR);
             $stmt->bindParam(4, $model, PDO::PARAM_STR);
-            $stmt->bindParam(4, $prodYear, PDO::PARAM_INT);
-            $stmt->bindParam(4, $carTypeID, PDO::PARAM_INT);
+            $stmt->bindParam(5, $prodYear, PDO::PARAM_INT);
+            $stmt->bindParam(6, $carType, PDO::PARAM_STR);
             $stmt->execute();
 
             $stmt = $this->db->prepare("SELECT @success as success");
